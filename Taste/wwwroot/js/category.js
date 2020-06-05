@@ -35,7 +35,7 @@ function loadList() {
     });
 }
 
-function Delete() {
+function Delete(url) {
     swal({
         title: "Are you sure you want to Delete?",
         text: "You will not be able to restore data!",
@@ -45,7 +45,7 @@ function Delete() {
     }).then((willDelete) => {
         if (willDelete) {
             $.ajax({
-                type: "DELETE",
+                type: 'DELETE',
                 url: url,
                 success: function(data) {
                     if (data.success) {
