@@ -20,7 +20,7 @@ function loadList() {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                        <a href="/Admin/category/MenuItem?id=${data}" class="btn btn-success text-white" style="cursor: pointer; width: 30%;">
+                        <a href="/Admin/MenuItem/upsert?id=${data}" class="btn btn-success text-white" style="cursor: pointer; width: 30%;">
                             <i class="far fa-edit"></i> Edit
                         </a>
                         <a class="btn btn-danger text-white" style="cursor: pointer; width: 30%;" onclick=Delete('/api/MenuItem/'+${data})>
@@ -33,7 +33,8 @@ function loadList() {
         "language": {
             "emptyTable": "no data found."
         },
-        "width": "100%"
+        "width": "100%",
+        "order": [[2,"asc"]]
     });
 }
 
