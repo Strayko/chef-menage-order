@@ -23,18 +23,16 @@ function loadList() {
                     if (lockout > today) {
                         //currently user is locked
                         return `<div class="text-center">
-                        <a  class="btn btn-danger text-white" style="cursor: pointer; width: 30%;" onclick=LockUnlock('${data.id}')>
-                            <i class="far fa-edit"></i> Edit
-                        </a>`;
+                        <a  class="btn btn-danger text-white" style="cursor: pointer; width: 40%;" onclick=LockUnlock('${data.id}')>
+                            <i class="fas fa-lock-open"></i> Unlock
+                        </a></div>`;
+                    } else {
+                        return `<div class="text-center">
+                        <a  class="btn btn-success text-white" style="cursor: pointer; width: 40%;" onclick=LockUnlock('${data.id}')>
+                            <i class="fas fa-lock"></i> Lock
+                        </a></div>`;
                     }
-                    return `<div class="text-center">
-                        <a href="/Admin/category/upsert?id=${data}" class="btn btn-success text-white" style="cursor: pointer; width: 30%;">
-                            <i class="far fa-edit"></i> Edit
-                        </a>
-                        <a class="btn btn-danger text-white" style="cursor: pointer; width: 30%;" onclick=Delete('/api/category/'+${data})>
-                            <i class="far fa-trash-alt"></i> Delete
-                        </a>
-                    </div>`;
+
                 }, "width": "30%"
             }
         ],
@@ -45,27 +43,20 @@ function loadList() {
     });
 }
 
-function Delete(url) {
-    swal({
-        title: "Are you sure you want to Delete?",
-        text: "You will not be able to restore data!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    }).then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type: 'DELETE',
-                url: url,
-                success: function (data) {
-                    if (data.success) {
-                        toastr.success(data.message);
-                        dataTable.ajax.reload();
-                    } else {
-                        toastr.error(data.message);
-                    }
-                }
-            });
+function LockUnlock(id) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/User',
+        data: JSON.stringify(id),
+        contentType: "application/json",
+        success: function (data) {
+            if (data.success) {
+                toastr.success(data.message);
+                dataTable.ajax.reload();
+            } else {
+                toastr.error(data.message);
+            }
         }
     });
 }
