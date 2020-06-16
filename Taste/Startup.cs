@@ -45,6 +45,13 @@ namespace Taste
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -75,6 +82,7 @@ namespace Taste
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
