@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Stripe.BillingPortal;
 
 namespace Taste.Areas.Identity.Pages.Account
 {
@@ -36,7 +37,8 @@ namespace Taste.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                HttpContext.Session.Clear();
+                return RedirectToPage("../Customer/Home/Index");
             }
         }
     }
