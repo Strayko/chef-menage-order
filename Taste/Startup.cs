@@ -12,9 +12,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe;
 using Taste.DataAccess;
 using Taste.DataAccess.Data.Repository;
 using Taste.DataAccess.Data.Repository.IRepository;
+using Taste.Utility;
 
 namespace Taste
 {
@@ -52,6 +54,8 @@ namespace Taste
                 options.Cookie.IsEssential = true;
             });
 
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -88,6 +92,8 @@ namespace Taste
             app.UseAuthorization();
 
             app.UseMvc();
+
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
         }
     }
 }
