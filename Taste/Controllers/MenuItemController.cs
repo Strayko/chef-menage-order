@@ -49,7 +49,7 @@ namespace Taste.Controllers
                 _unitOfWork.MenuItem.Remove(objFromDb);
                 _unitOfWork.Save();
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 return Json(new { success = false, message = "Error while deleting." });
             }
