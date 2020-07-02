@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Stripe;
 using Taste.DataAccess;
+using Taste.DataAccess.Data.Initializer;
 using Taste.DataAccess.Data.Repository;
 using Taste.DataAccess.Data.Repository.IRepository;
 using Taste.Utility;
@@ -41,6 +42,7 @@ namespace Taste
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             //services.AddMvc(options => options.EnableEndpointRouting = false)
             //.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
@@ -82,7 +84,7 @@ namespace Taste
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -99,6 +101,7 @@ namespace Taste
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+            dbInitializer.Initialize();
 
             app.UseRouting();
             app.UseAuthentication();

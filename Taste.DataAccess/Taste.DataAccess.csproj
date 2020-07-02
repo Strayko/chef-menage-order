@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Initializer\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Taste.Models\Taste.Models.csproj" />
     <ProjectReference Include="..\Taste.Utility\Taste.Utility.csproj" />
   </ItemGroup>
